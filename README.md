@@ -10,7 +10,7 @@ Centre National des Catastrophes
 
 # Running
 
-either
-```npm run dev```
-or
+either <br />
+```npm run dev```<br />
+or<br />
 ```npm start``` and ```npm run client```
