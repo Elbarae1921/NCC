@@ -16,4 +16,4 @@ then:
 either <br />
 ```npm run dev```<br />
 or<br />
-```npm start``` and ```npm run client```
+```npm start``` and ```npm run client``` (on a seperate command line)
