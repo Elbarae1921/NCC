@@ -8,7 +8,10 @@ Centre National des Catastrophes
 
 ```npm run client install```
 
-# Running
+# Usage
+
+first, create a `.env` following the same structure in `.env_sample` and provide your environment variables there.
+then:
 
 either <br />
 ```npm run dev```<br />
