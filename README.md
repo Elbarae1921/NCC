@@ -1,5 +1,5 @@
 # CNC
-[Centre National des Catastrophes](https://centrenationaldescatastrophes.herokuapp.com/)
+[Centre National des Catastrophes](https://nationalcatastrophecenter.herokuapp.com/)
 
 
 # Installation
