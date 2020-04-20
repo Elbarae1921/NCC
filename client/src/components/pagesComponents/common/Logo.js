@@ -11,7 +11,7 @@ export class Logo extends Component {
                 <Link to="/about" className="abb">
                     <div>
                         <div id="abb">
-                            CNC
+                            NCC
                         </div>
                         <div id="title">
                             National Catastrophe Center
