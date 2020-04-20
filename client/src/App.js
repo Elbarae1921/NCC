@@ -11,6 +11,8 @@ import FindResults from './components/pages/FindResults';
 import Weather from './components/pages/Weather';
 import WeatherResults from './components/pages/WeatherResults';
 import About from './components/pages/About';
+import Contact from './components/pages/Contact';
+import Staff from './components/pages/Staff/Staff';
 import NotFound from './components/pages/NotFound';
 
 class App extends React.Component {
@@ -30,8 +32,10 @@ class App extends React.Component {
               <Route path="/find" component={Find} />
               <Route path="/results" component={FindResults} />
               <Route path="/about" component={About} />
+              <Route path="/contact" component={Contact} />
               <Route path="/weather" component={Weather} />
               <Route path="/weather-results" component={WeatherResults} />
+              <Route path="/staff" component={Staff} />
               {/* 404 not found page */}
               <Route path="/404" component={NotFound} />
               {/* Redirect every oder route to /404 route */}

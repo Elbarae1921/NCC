@@ -167,6 +167,10 @@ body, html, #root {
   min-width: 300px;
 }
 
+.background-image.partner.staff {
+  min-height: 500px;
+}
+
 .background-image.weather {
   background: url('assets/weather.jpg') no-repeat;
   background-position: center center;
@@ -184,8 +188,19 @@ body, html, #root {
   min-width: 300px;
 }
 
-.box-container.partner {
-  min-width: 300px;
+.box-container div h1 {
+  color: white;
+  font-family: 'Roboto Mono', monospace;
+  text-align: center;
+}
+
+.staff-container {
+  width: 30%;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .back {
@@ -207,12 +222,47 @@ body, html, #root {
 .box {
   background: rgba(5, 5, 5, 0.7);
   color: white;
-  width: 30%;
   margin: auto;
+  width: 30%;
   min-width: 300px;
   flex: 2;
   padding: 20px;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
+
+.box.staff {
+  background: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: none;
+  width: fit-content;
+  min-width: 350px;
+}
+
+.box.staff .staff-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  padding: 20px;
+  border-top: 1px solid white;
+  transition: 200ms;
+}
+
+.box.staff .staff-menu span a, .box.staff .staff-menu span a:focus, .box.staff .staff-menu span a:visited {
+  color: inherit;
+  text-decoration: inherit;
+  word-wrap: none;
+}
+
+.box.staff .staff-menu:hover {
+  background: rgba(5, 5, 5, 0.5);
+  transition: 200ms;
+}
+
+.box.staff .staff-menu:first-of-type {
+  border-top: none;
 }
 
 .box.confirmation {
@@ -315,6 +365,20 @@ body, html, #root {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.input-area {
+  background: none;
+  border: none;
+  border-bottom: 1px solid white;
+  width: 290px;
+  height: 90px;
+  color: white;
+  font-size: 15px;
+  font-family: Arial, Helvetica, sans-serif;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.30), 0 2px 10px 0 rgba(0,0,0,0.30);
+  padding: 10px;
+  resize: vertical;
+}
+
 .input-text:focus {
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.30), 0 2px 10px 0 rgba(0,0,0,0.30);
 }
@@ -362,7 +426,7 @@ body, html, #root {
   margin: 10px 0;
 }
 
-.conf-container h3 {
+.conf-container h3, .conf-container h5 {
   text-align: center;
   font-family: 'Sen', sans-serif;
 }
@@ -951,6 +1015,20 @@ div.notfound a.notfound:hover {
   color: white;
 }
 
+/***********/
+
+.logout {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  padding: 10px;
+}
+
+.logout .btn {
+  width: 70px;
+  border-radius: 10px;
+}
+
 /*animations*/
 
 @keyframes weather-icon-move {
@@ -1078,4 +1156,33 @@ div.notfound a.notfound:hover {
   div.notfound {
     position: static;
   }
+}
+
+@media only screen and (max-width: 430px) {
+
+  h1.notfound  {
+    font-size: 150px;
+  }
+  
+}
+
+@media only screen and (max-width: 320px) {
+
+  h1.notfound  {
+    font-size: 153px;
+  }
+  
+}
+
+@media only screen and (max-width: 390px) {
+
+  .box.staff {
+    min-width: 300px;
+  }
+
+  .box.staff .staff-menu {
+    min-width: initial;
+    font-size: 40px;
+  }
+  
 }

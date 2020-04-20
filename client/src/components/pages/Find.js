@@ -32,10 +32,9 @@ export class Find extends Component {
         // clear errors
         this.unError();
         // GET => http://localhost:5000/api/person?firstName&familyName&city
-        axios.get(`/api/person?${$(e.target).serialize()}`)
+        axios.get(`/api/checkin?${$(e.target).serialize()}`)
             .then(res => {
                 if(!res.data.errors) { // if there are no errors
-                    console.log(res.data);
                     this.props.history.push({ // redirect to the results page
                         pathname: '/results',
                         state: res.data // send data to the results page/component as a state object
