@@ -14,7 +14,6 @@ export class StaffCheckins extends Component {
         persons: [],
         error: ""
     }
-
     error = (err) => {
         // set error, which would appear in the <p class="error"> tag since it's bound with the state
         this.setState({persons: this.state.persons, error: err});
@@ -27,7 +26,7 @@ export class StaffCheckins extends Component {
 
     getCheckins = e => {
         this.unError(); //clear errors
-        const url = e.target.value.trim() ? `/api/staff/checkin?match=${e.target.value.trim()}` : '/api/staff/checkins'; //make api call
+        const url = e.target.value.trim() ? `/api/staff/checkin?match=${e.target.value.trim()}` : '/api/staff/checkin'; //make api call
         axios.get(url, {
             headers: {
                 "Authorization": `Bearer ${Auth.getToken}` //send login token

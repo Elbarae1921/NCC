@@ -28,7 +28,7 @@ export class StaffHome extends Component {
                         </div>
                     </div>
                     <div class="logout">
-                        <button onClick={this.out} class="btn">Logout</button>
+                        <button onClick={this.out} className="btn">Logout</button>
                     </div>
                 </div>
             )

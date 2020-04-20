@@ -14,7 +14,7 @@ export class Logo extends Component {
                             CNC
                         </div>
                         <div id="title">
-                            Centre National des Catastrophes
+                            National Catastrophe Center
                         </div>
                     </div>
                 </Link>
