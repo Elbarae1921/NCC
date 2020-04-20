@@ -133,7 +133,7 @@ const checkIn = (req, res, next) => {
                 timezone: "Africa/Casablance",
                 //country: req.ipInfo ? req.ipInfo.country || "N/A" : "N/A",
                 country: "MA",
-                //city: req.ipInfo ? req.ipInfo.city || "N/A" : "N/A",
+                //cityL: req.ipInfo ? req.ipInfo.city || "N/A" : "N/A",
                 cityL: "Agadir",
                 //region: req.ipInfo ? req.ipInfo.region || "N/A" : "N/A",
                 region: "06",
