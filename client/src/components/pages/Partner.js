@@ -117,13 +117,13 @@ export class Partner extends Component {
                                 If you're an organization that helps unite victims of natural/man-made disasters with their families and loved ones, you can have unlimited access to our api, which would further the efforts in disaster prevention, and contribute to the pool of data to analyse.
                             </p>
                             <p>
-                                <pre className="method get">GET</pre> <pre className="url">https://centrenationaldescatastrophes.herokuapp.com/api/person?firstName=Ben{'&'}familyName=Kenobi{'&'}city=Tatooine</pre>
+                                <pre className="method get">GET</pre> <pre className="url">https://nationalcatastrophecenter.herokuapp.com/api/person?firstName=Ben{'&'}familyName=Kenobi{'&'}city=Tatooine</pre>
                             </p>
                             <p style={{marginBottom: "0"}}>
-                                <pre className="method post">POST</pre> <pre className="url">curl -H "Authorization: Bearer <key>{'{YOUR_KEY}'}</key>" https://centrenationaldescatastrophes.herokuapp.com/api/organization/checkin</pre>
+                                <pre className="method post">POST</pre> <pre className="url">curl -H "Authorization: Bearer <key>{'{YOUR_KEY}'}</key>" https://nationalcatastrophecenter.herokuapp.com/api/organization/checkin</pre>
                             </p>
                             <p style={{fontSize: "8px", margin: "0"}}>
-                                For more information on how to use the API, visit <a href="https://centrenationaldescatastrophes.herokuapp.com/api/">/api/howto</a>
+                                For more information on how to use the API, visit <a href="https://nationalcatastrophecenter.herokuapp.com/api/">/api/</a>
                             </p>
                         </div>
                     </div>
