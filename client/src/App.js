@@ -1,19 +1,10 @@
 //imort all necessary modules
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+
 //import components
-import Index from './components/pages/Index';
-import CheckIn from './components/pages/CheckIn';
-import CheckInConfirmation from './components/pages/CheckInConfirmation';
-import Find from './components/pages/Find';
-import Partner from './components/pages/Partner';
-import FindResults from './components/pages/FindResults';
-import Weather from './components/pages/Weather';
-import WeatherResults from './components/pages/WeatherResults';
-import About from './components/pages/About';
-import Contact from './components/pages/Contact';
-import Staff from './components/pages/Staff/Staff';
-import NotFound from './components/pages/NotFound';
+import { CheckIn, CheckInConfirmation, Index, Find, Partner, FindResults, Weather, WeatherResults, About, Contact, Staff, NotFound } from './components/pages';
+
 
 class App extends React.Component {
   
