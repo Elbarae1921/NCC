@@ -26,7 +26,7 @@ const Contact = require("./../models/Contact");
 
 
 
-//login middleware
+//POST => api/staff/login
 const login = (req, res, next) => {
     //get the request body params
     const {email, password} = req.body;
@@ -110,6 +110,7 @@ const login = (req, res, next) => {
 
 
 
+//token verification middleware
 const verifyToken = (req, res, next) => {
     //Get auth header value
     const bearerHeader = req.headers['authorization'];
@@ -188,6 +189,7 @@ const verifyToken = (req, res, next) => {
 
 
 
+//GET => /api/staff/checkin
 const checkins = (req, res, next) => {
     //get request body params
     const match = req.query.match;
@@ -289,6 +291,7 @@ const checkins = (req, res, next) => {
 
 
 
+//DELETE => /api/staff/checkin
 const checkinDelete = (req, res, next) => {
     
     //get request body params
@@ -357,6 +360,7 @@ const checkinDelete = (req, res, next) => {
 
 
 
+//POST => /api/staff/password
 const changePassword = (req, res, next) => {
     //get Validation errors
     const errors = expressValidator.validationResult(req);
@@ -481,6 +485,7 @@ const changePassword = (req, res, next) => {
 
 
 
+//GET => /api/staff/partner
 const partners = (req, res, next) => {
     //get request body params
     const match = req.query.match;
@@ -549,6 +554,7 @@ const partners = (req, res, next) => {
 
 
 
+// DELETE => /api/staff/partner
 const partnerDelete = (req, res, next) => {
 
     //get request body params
@@ -617,6 +623,7 @@ const partnerDelete = (req, res, next) => {
 
 
 
+// GET => /api/staff/contact
 const contacts = (req, res, next) => {
     //get request body params
     const match = req.query.match;
@@ -685,6 +692,7 @@ const contacts = (req, res, next) => {
 
 
 
+// DELETE => /api/staff/contact
 const contactDelete = (req, res, next) => {
 
     //get request body params

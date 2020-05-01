@@ -17,8 +17,7 @@ const Person = require('./../models/Person');
 
 
 
-// POST => /api/organization/checkin middleware
-
+// POST => /api/organization/register
 const register = (req, res, next) => {
 
     //get all the params sent with the post request
@@ -100,6 +99,7 @@ const register = (req, res, next) => {
 
 
 
+//POST => /api/login
 const login = (req, res, next) => {
     
     //get request params

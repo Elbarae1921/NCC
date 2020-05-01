@@ -11,6 +11,8 @@ const Contact = require('./../models/Contact');
 
 
 
+// POST => /api/contact
+
 const contact = (req, res, next) => {
     // get request body params
     const {name, email, message} = req.body;

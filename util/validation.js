@@ -33,7 +33,7 @@ const validate = method => {
                 expressValidator.query('city', 'A city must be chosen in order to fetch weather data.').exists().trim().isString()
             ]
         } 
-        case 'del' : { // checkin delete validation
+        case 'del' : { // checkin/partner/contact delete validation
             return [
                 expressValidator.body('id', 'ID is required.').exists().trim().isString()
             ]

@@ -15,8 +15,7 @@ const Person = require('./../models/Person');
 
 
 
-// GET => /api/person?firstName=Jack&familyName=Sparrow middleware
-
+// GET => /api/person?firstName=Jack&familyName=Sparrow
 const getPerson = (req, res, next) => {
 
     //get params values from query e.g : ?firstName=value&familyName=value&city=value
@@ -102,8 +101,7 @@ const getPerson = (req, res, next) => {
 
 
 
-// POST => /api/checkin middleware
-
+// POST => /api/checkin
 const checkIn = (req, res, next) => {
 
     //get validation errors

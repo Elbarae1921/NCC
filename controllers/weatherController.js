@@ -16,8 +16,7 @@ const API_KEY = process.env.API_KEY; //worldweatheronline.com api key
 
 
 
-// GET /api/weather?city=Vinland middleware
-
+// GET /api/weather?city=Vinland
 const getWeather = (req, res, next) => {
 
     //get validation errors
