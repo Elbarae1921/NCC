@@ -15,7 +15,7 @@ then:
 
 either <br />
 ### ```npm run dev```<br />
-or<br />
+### or<br />
 ### ```npm start``` and ```npm run client``` (on a seperate command line)
 
 access the main app at `http://localhost:3000` and the api at `http://localhost:5000/api`.
