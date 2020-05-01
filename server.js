@@ -14,6 +14,8 @@ const PASSWORD = process.env.MONGODB_PASSWORD; //mongoDB passwordx
 
 
 
+//module for path operations
+const path = require('path');
 //NodeJS webapp framework
 const express = require('express');
 //MongoDB object modeling tool
@@ -22,6 +24,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 //package for getting IP information using geoip-lite
 const expressIp = require('express-ip');
+//to serve the favicon file
+const favicon = require('express-favicon');
 
 
 
@@ -85,11 +89,20 @@ server.use(bodyParser.urlencoded({extended: false}));
 
 /*--------------------------------------------HANDELING THE ROUTES--------------------------------------------*/
 
+
+
+// serving the website's favicon
+server.use(favicon(__dirname + '/client/build/favicon.ico'));
+// serving react's build folder
+server.use(express.static(path.join(__dirname, 'client', 'build')));
+
+
+
 //-----DOCUMENTATION
 // GET => localhost:5000/api/ : api documentation  //get the documentation object from the utilities folder
 server.use('/api', documentationRoutes);
 
-//-----CONTACT ROUTE
+//-----CONTACT ROUTE (NO AUTH)
 // GET => localhost:5000/api/contact/
 server.use('/api/contact', contactRoutes);
 
@@ -105,9 +118,16 @@ server.use('/api/weather', weatherRouter);
 //POST => /api/organization/*
 server.use('/api/organization', organizationRouter);
 
-//-----STAFF ROUTES (AUT)
+//-----STAFF ROUTES (AUTH)
 //ROUTE ==> /api/staff/*'
 server.use('/api/staff', staffRouter);
+
+
+
+//redirecting every other route to react (react handles the 404s as well)
+server.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+});
 
 
 
