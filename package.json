@@ -22,8 +22,7 @@
     "express-ip": "^1.0.4",
     "express-validator": "^6.4.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.7",
-    "ngrok": "^3.2.7"
+    "mongoose": "^5.9.7"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
