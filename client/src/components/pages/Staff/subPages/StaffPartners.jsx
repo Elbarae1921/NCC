@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import querystring from 'querystring';
@@ -10,6 +10,29 @@ const StaffPartners = props => {
 
     const [error, setError] = useState("");
     const [partners, setPartners] = useState([]);
+
+
+    useEffect(() => {
+        const url = '/api/staff/partner'; //make api call
+        axios.get(url, {
+            headers: {
+                "Authorization": `Bearer ${Auth.getToken}` //send login token
+            }
+        }).then(res => {
+            if (!res.data.errors) {
+                setPartners(res.data.partners); //get data
+            }
+            else {
+                setError("There was an error with the server.") //in case of error
+            }
+        }).catch(err => {
+            if (err.response.status === 403) { //if Forbidden it means the token is invalid
+                Auth.logout(() => {
+                    props.history.push("/staff/login"); //redirect to login
+                });
+            }
+        });
+    }, []);
 
 
 

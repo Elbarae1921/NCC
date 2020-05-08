@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import querystring from 'querystring';
@@ -10,6 +10,29 @@ const StaffCheckins = props => {
 
     const [persons, setPersons] = useState([]);
     const [error, setError] = useState("");
+
+
+    useEffect(() => {
+        const url = '/api/staff/checkin'; //make api call
+        axios.get(url, {
+            headers: {
+                "Authorization": `Bearer ${Auth.getToken}` //send login token
+            }
+        }).then(res => {
+            if (!res.data.errors) {
+                setPersons(res.data.persons); //get data
+            }
+            else {
+                setError("There was an error with the server."); //in case of error
+            }
+        }).catch(err => {
+            if (err.response.status === 403) { //if Forbidden it means the token is invalid
+                Auth.logout(() => {
+                    props.history.push("/staff/login"); //redirect to login
+                });
+            }
+        });
+    }, []);
 
 
     const getCheckins = e => {
