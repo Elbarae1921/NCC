@@ -133,10 +133,8 @@ const Partner = () => {
               <p style={{ marginBottom: "0" }}>
                 <pre className="method post">POST</pre>{" "}
                 <pre className="url">
-                  curl -H "Authorization: Bearer <key>{"{YOUR_KEY}"}</key>" -d
-                    "firstName=John&familyName=Doe&city=Virginia" -X POST
-                    https://nationalcatastrophecenter.herokuapp.com/api/organization/checkin
-                  </pre>
+                    curl -H "Authorization: Bearer <key>{"{YOUR_KEY}"}</key>" -H "Content-Type: application/json" -d {'\'[{"firstName":"Grimmer", "familyName":"Wolfwood", "city":"Yorknew"}]\''} -X POST https://nationalcatastrophecenter.herokuapp.com/api/organization/checkin
+                </pre>
               </p>
               <p style={{ fontSize: "8px", margin: "0" }}>
                 For more information on how to use the API, visit{" "}
