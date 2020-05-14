@@ -29,7 +29,7 @@ router.post('/login', validate('login'), organizationController.login);
 
 //requires a key, which is verified in the verifyKey middleware
 //POST => /api/organization/checkin
-router.post('/checkin', organizationController.verifyKey, validate('checkin'), organizationController.checkin);
+router.post('/checkin', organizationController.verifyKey, organizationController.checkin);
 
 
 

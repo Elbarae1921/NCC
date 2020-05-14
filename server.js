@@ -79,6 +79,8 @@ server.use(expressIp().getIpInfoMiddleware);
 
 //parse incoming request bodies in a middleware before the handlers (available under the req.body)
 server.use(bodyParser.urlencoded({extended: false}));
+// only parse request with Content-Type of application/x-www-form-urlencoded or application/json
+server.use(bodyParser.json());
 
 
 

@@ -206,40 +206,91 @@ const verifyKey = (req, res, next) => {
 // POST => /api/organization/checkin middleware
 const checkin = (req, res, next) => {
     
-    //get validation errors
-    const errors = expressValidator.validationResult(req);
+    //check if the request body is an array
+    if(req.body && Array.isArray(req.body)) {
+        // check if the array has any elements
+        if(req.body.length) {
+            // validate the array
+            const valid = req.body.every(x => {
+                // check if it has firstName, familyName and city properties and their types are string
+                let basic = typeof x.firstName === "string" & typeof x.familyName === "string" & typeof x.city === "string";
 
-    //check if there is any validation error
-    if(!errors.isEmpty()) 
-        res.json(errors); //send back the errors
-    else {
-        //get all the params sent with the post request
-        const {firstName, familyName,city} = req.body;
+                let fm = true;
+                // check if there is a familyMembers prop
+                if(x.hasOwnProperty("familyMembers")) {
+                    // check if it's just a string
+                    if(typeof x.familyMembers === "string") {
+                        x.familyMembers = [x.familyMembers];
+                        fm = true;
+                    } // or if it's an array
+                    else if(Array.isArray(x.familyMembers)) {
+                        // check if the familyMembers array is not empty
+                        if(x.familyMembers.length !== 0)
+                            fm = x.familyMembers.every(x => typeof x === "string");// if not check if all the elements are strings
+                    }
+                    else {
+                        x.familyMembers = [];
+                    }
+                }
+                else {
+                    x.familyMembers = [];
+                }
 
-        //check if the familyMembers is an array (more than one), if it's not push it inside a new array, and if it's undefined create a new empty array (familyMembers must always be an array)
-        const familyMembers = Array.isArray(req.body.familyMembers) ? req.body.familyMembers.includes("undefined") || req.body.familyMembers.includes("") ? req.body.familyMembers.filter(fm => fm != "undefined" && fm != "").map(fm => {return fm.trim()}) : req.body.familyMembers.map(fm => {return fm.trim()}) : req.body.familyMembers === undefined || req.body.familyMembers === "" || req.body.familyMembers === "undefined" ? [] : [req.body.familyMembers.trim()];
-        
-
-        //get the organization from database
-        Organization.findById(req.token, (err, organization) => {
-            if(err) { //handle database errors
-                console.log(err);
-                res.json({
-                    errors: [{
-                        msg: "Error while fetching informatin info."
+                return fm && basic;
+            });
+            if(!valid) { // send back error and exit if the array was not valid
+                return res.json({
+                    errors:[{
+                        msg: "Please send a valid array of checkins."
                     }]
                 });
             }
-            else {
+        }
+        else { // send back error and exit
+            return res.json({
+                errors:[{
+                    msg: "Please send a valid array of checkins."
+                }]
+            });
+        }
+    }
+    else { // send back error and exit
+        return res.json({
+            errors:[{
+                msg: "Please send a valid array of checkins."
+            }]
+        });
+    }
 
-                if(organization) { //check if the key belons to an organization
-                    //create a new Person
-                    //IP informations are commented out because this won't work on localhost, must uncomment on production server
-                    let person = new Person({
-                        firstName,
-                        familyName,
-                        familyMembers,
-                        city,
+    // if the array of checkins is valid, 
+    // sanitize the array from other properties (if there is) and save it to a constant
+    const checkins = req.body.map(x => {
+        return {
+            firstName: x.firstName,
+            familyName: x.familyName,
+            city: x.city,
+            familyMembers: x.familyMembers
+        };
+    });
+    // proceed to saving to database
+    // check if there is an organization with the same token/id
+    Organization.findById(req.token, (err, organization) => {
+        if(err) { //handle database errors
+            console.log(err);
+            res.json({
+                errors: [{
+                    msg: "Error while fetching informatin info."
+                }]
+            });
+        }
+        else {
+
+            if(organization) { //check if the key belons to an organization
+                //create a new Person array
+                //IP informations are commented out because this won't work on localhost, must uncomment on production server
+                let persons = checkins.map(x => {
+                    return new Person({
+                        ...x, // spread the previous information (firstName, familyN...etc)
                         fromOrg: true,
                         org: organization.name, // current organization name
                         // ip: req.ipInfo.ip,
@@ -255,55 +306,57 @@ const checkin = (req, res, next) => {
                         //latitude: req.ipInfo ? req.ipInfo.ll ? req.ipInfo.ll[0] || "N/A" : "N/A" : "N/A",
                         latitude: "30.213",
                         //longitude: req.ipInfo ? req.ipInfo.ll ? req.ipInfo.ll[1] || "N/A" : "N/A" : "N/A",
-                        longitude: "-7.467"});
-
-                        //save the new person to the database
-                        person.save((err, person) => {
-
-                            if(err) { //check for error, and send it back as a response
-                                console.log(err);
-                                res.json({
-                                    errors: [{
-                                        msg: "Error while registering person."
-                                    }]
-                                });
-                            }
-                            else { //if the save was successful send back the person object as a response
-                                res.json({//restructure the object in such a way to be easier to manipulate in the client side
-                                    available: {//available info
-                                        firstName : person.firstName,
-                                        familyName : person.familyName,
-                                        familyMembers : person.familyMembers,
-                                        city : person.city,
-                                        status : person.status,
-                                        fromOrg: person.fromOrg,
-                                        org: person.org || ""
-                                    },
-                                    location: {//locations info
-                                        ip : person.ip,
-                                        timezone : person.timezone,
-                                        country : person.country,
-                                        city : person.cityL,
-                                        region : person.region,
-                                        latitude : person.latitude,
-                                        longitude : person.longitude
-                                    }
-                                });
-                                
-                            }
-                        
-                        });
-                }
-                else { //if there's no organization with the given key
-                res.json({
-                    errors: [{
-                        msg: "Invalid key."
-                    }]
+                        longitude: "-7.467"
+                    });
                 });
-                }
+                //save the new person to the database
+                Person.insertMany(persons, (err, docs) => {
+
+                    if(err) { //check for error, and send it back as a response
+                        console.log(err);
+                        res.json({
+                            errors: [{
+                                msg: "Error while saving persons."
+                            }]
+                        });
+                    }
+                    else { //if the save was successful send back the person object as a response
+                        //restructure the object in such a way to be easier to manipulate in the client side
+                        res.json(docs.map(person => {
+                            return {
+                                available: {//available info
+                                    firstName : person.firstName,
+                                    familyName : person.familyName,
+                                    familyMembers : person.familyMembers,
+                                    city : person.city,
+                                    status : person.status,
+                                    fromOrg: person.fromOrg,
+                                    org: person.org || ""
+                                },
+                                location: {//locations info
+                                    ip : person.ip,
+                                    timezone : person.timezone,
+                                    country : person.country,
+                                    city : person.cityL,
+                                    region : person.region,
+                                    latitude : person.latitude,
+                                    longitude : person.longitude
+                                }
+                            }
+                        }));
+                    }
+
+                });
             }
-        });
-    }
+            else { //if there's no organization with the given key
+            res.json({
+                errors: [{
+                    msg: "Invalid key."
+                }]
+            });
+            }
+        }
+    });
     
 }
 
