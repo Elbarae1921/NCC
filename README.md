@@ -22,4 +22,4 @@ access the main app at `http://localhost:3000` and the api at `http://localhost:
 
 Ultimately you can run
 #### ```npm run build```
-to create a build folder, and `node server.js` in the root directory, then you can access the app at `http://localhost:5000/` and the api at `/api` since the server redirects every route that isn't "/api" to the react's `index.html` file.
+to create a build folder, and `node server.js` in the root directory, then you can access the app at `http://localhost:5000/` and the api at `/api` since the server redirects every route that isn't "/api" to react's `index.html` file.
