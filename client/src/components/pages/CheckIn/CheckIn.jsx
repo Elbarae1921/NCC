@@ -3,13 +3,14 @@ import React, { useState } from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import $ from 'jquery';
-import {InputGroup, Logo} from '../../others';
+import {InputGroup, Logo, Spinner} from '../../others';
 
 export const CheckIn = props => {
 
     // set the state
     const [FamilyMembers, setFamilyMembers] = useState([]);
     const [error, setError] = useState("");
+    const [spin, setSpin] = useState(false);
 
     const addField = () => {
         // function to add another family member field
@@ -24,6 +25,7 @@ export const CheckIn = props => {
         e.preventDefault();
         // clear errors
         setError("");
+        setSpin(true);
         // POST => http://localhost:5000/api/checkin
         axios.post('/api/checkin', $(e.target).serialize())
             .then(res => {
@@ -39,7 +41,8 @@ export const CheckIn = props => {
             })
             .catch(() => { // if the http request failed
                 setError("It seems there was a problem with the server. Please try again") // show error
-            });
+            })
+            .finally(() => setSpin(false));
     }
 
 
@@ -75,6 +78,9 @@ export const CheckIn = props => {
                         <InputGroup type="button" text="Add Family Member" onClick={addField} />
                         {/* set placeholder for onclick event */}
                         <InputGroup type="submit" text="Submit"  onClick={() => {}} />
+                        <div className="spinnerContainer">
+                            <Spinner show={spin} size={20}/>
+                        </div>
                         {/* This pragaraph is bound with error property of the state object, and will change whenever it changes */}
                         <p className="error">{error}</p>
                     </form>

@@ -2,19 +2,21 @@ import React, { useState } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import $ from 'jquery';
 import Auth from '../Auth';
-import { InputGroup, Logo } from '../../../others';
+import { InputGroup, Logo, Spinner } from '../../../others';
 
 const StaffLogin = props => {
 
     // set the state
     const [error, setError] = useState("");
+    const [spin, setSpin] = useState(false);
 
 
     const submit = e => {
         e.preventDefault();
         setError(""); //clear any previous errors
+        setSpin(true);
         Auth.login($(e.target).serialize(), err => { //do a login attempt
-
+            setSpin(false);
             if (err) { //check for errors during login
                 setError(err); //display error
             }
@@ -43,6 +45,9 @@ const StaffLogin = props => {
                         <InputGroup type="email" text="email..." name="email" />
                         <InputGroup type="password" text="Password..." name="password" />
                         <InputGroup type="submit" text="Submit" onClick={() => { }} />
+                        <div className="spinnerContainer">
+                            <Spinner show={spin} size={20}/>
+                        </div>
                         <p className="error">{error}</p>
                     </form>
                 </div>

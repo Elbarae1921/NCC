@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import $ from "jquery";
-import { InputGroup, Logo } from "../../others";
+import { InputGroup, Logo, Spinner } from "../../others";
 import Login from "./Login";
 import Register from "./Register";
 
@@ -14,6 +14,7 @@ const Partner = () => {
     const [error, setError] = useState("");
     const [login, setLogin] = useState(true);
     const [Switch, setSwicth] = useState("registration");
+    const [spin, setSpin] = useState(false);
 
     const changeMode = () => {
         // change mode from login to register or vice versa
@@ -27,6 +28,7 @@ const Partner = () => {
         e.preventDefault();
         // clear errors
         setError("");
+        setSpin(true);
         // POST => http://localhost:5000/organization/login
         axios
           .post("/api/organization/login", $(e.target).serialize())
@@ -46,7 +48,8 @@ const Partner = () => {
             setError(
               "It seems there was a problem with the server. Please try again"
             );
-          });
+          })
+          .finally(() => setSpin(false));
     };
 
     const submitRegister = (e) => {
@@ -54,6 +57,7 @@ const Partner = () => {
         e.preventDefault();
         // clear errors
         setError("");
+        setSpin(true);
         // POST => http://localhost:5000/organization/register
         axios
           .post("/api/organization/register", $(e.target).serialize())
@@ -73,7 +77,8 @@ const Partner = () => {
             setError(
               "It seems there was a problem with the server. Please try again"
             );
-          });
+          })
+          .finally(() => setSpin(false));
     };
 
     
@@ -102,6 +107,9 @@ const Partner = () => {
             <div className="form">
               <h3>Get a key</h3>
               { renderForm }
+              <div className="spinnerContainer">
+                  <Spinner show={spin} size={20}/>
+              </div>
               <p className="error">{error}</p>
               <p className="key">{result}</p>
               {/* button to S between login and register, note that the text is dynamic, and changes whenever the state is changed */}

@@ -3,7 +3,7 @@ import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 import $ from 'jquery';
 import Auth from '../Auth';
-import { InputGroup, Logo } from '../../../others';
+import { InputGroup, Logo, Spinner } from '../../../others';
 
 
 const StaffAccount = props => {
@@ -11,11 +11,13 @@ const StaffAccount = props => {
     // set the state
     const [error, setError] = useState("");
     const [notif, setNotif] = useState("");
+    const [spin, setSpin] = useState(false);
 
 
     const submit = e => {
         e.preventDefault();
         setError(""); //clear previous errors
+        setSpin(true);
         const url = '/api/staff/password'; //set the URL
         axios.post(url, $(e.target).serialize(), { //send http post request to change password
             headers: {
@@ -51,6 +53,7 @@ const StaffAccount = props => {
                 setError("It seems there was something wrong with the server.");
             }
         })
+        .finally(() => setSpin(false));
     }
 
 
@@ -73,6 +76,9 @@ const StaffAccount = props => {
                         <InputGroup type="password" text="New password..." name="newpass" />
                         <InputGroup type="password" text="New password again..." name="confirmation" />
                         <InputGroup type="submit" text="Submit" onClick={() => { }} />
+                        <div className="spinnerContainer">
+                            <Spinner show={spin} size={20}/>
+                        </div>
                         <p className="error">{error}</p>
                         <p className="key">{notif}</p>
                     </form>

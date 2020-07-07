@@ -3,12 +3,13 @@ import React, { useState } from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import $ from 'jquery';
-import {InputGroup, Logo} from '../../others';
+import {InputGroup, Logo, Spinner} from '../../others';
 
 export const Find = props => {
 
     // set the state
     const [error, setError] = useState("");
+    const [spin, setSpin] = useState(false);
 
 
     const submit = e => {
@@ -16,6 +17,7 @@ export const Find = props => {
         e.preventDefault();
         // clear errors
         setError("");
+        setSpin(true);
         // GET => http://localhost:5000/api/person?firstName&familyName&city
         axios.get(`/api/checkin?${$(e.target).serialize()}`)
             .then(res => {
@@ -31,7 +33,8 @@ export const Find = props => {
             })
             .catch(() => { // if the http request failed
                 setError("It seems there was a problem with the server. Please try again"); // show error
-            })       
+            })      
+            .finally(() => setSpin(false)) 
     }
 
 
@@ -53,6 +56,9 @@ export const Find = props => {
                             <InputGroup type="text" text="First Name..." name="firstName"  />
                             <InputGroup type="text" text="City..." name="city"  />
                             <InputGroup type="submit" text="Submit"  onClick={() => {}} />
+                            <div className="spinnerContainer">
+                                <Spinner show={spin} size={20}/>
+                            </div>
                             {/* This pragaraph is bound with error property of the state object, and will change whenever it changes */}
                             <p className="error">{error}</p>
                     </form>

@@ -3,12 +3,13 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import $ from 'jquery';
-import { InputGroup, Logo } from '../../others';
+import { InputGroup, Logo, Spinner } from '../../others';
 
 export const Weather = props => {
 
     // set the state
     const [error, setError] = useState("");
+    const [spin, setSpin] = useState(false);
 
 
     const submit = e => {
@@ -16,6 +17,7 @@ export const Weather = props => {
         e.preventDefault();
         // clear errors
         setError("");
+        setSpin(true);
         // GET => http://localhost:5000/api/weather?city=Winterfell
         axios.get(`/api/weather?${$(e.target).serialize()}`)
             .then(res => {
@@ -31,7 +33,8 @@ export const Weather = props => {
             })
             .catch(() => { // show network / http error
                 setError("It seems there was a problem with the server. Please try again later.")
-            });
+            })
+            .finally(() => setSpin(false));
     }
 
 
@@ -48,6 +51,9 @@ export const Weather = props => {
                     <form onSubmit={submit}>
                         <InputGroup type="text" text="City..." name="city" />
                         <InputGroup type="submit" text="Submit" onClick={() => { }} />
+                        <div className="spinnerContainer">
+                            <Spinner show={spin} size={20}/>
+                        </div>
                         {/* error paragraph, which changes dynamically with the state */}
                         <p className="error">{error}</p>
                     </form>
