@@ -1,5 +1,5 @@
 # NCC
-[National Catastrophe Center](https://nationalcatastrophecenter.herokuapp.com/)
+[National Catastrophe Center](https://national-catastrophe-center.herokuapp.com/)
 
 
 # Installation
